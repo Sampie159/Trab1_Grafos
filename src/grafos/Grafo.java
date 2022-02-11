@@ -5,13 +5,14 @@ import java.util.List;
 
 public class Grafo {
     public Vertice[] vertices;
-    public List<Vertice> topologico = new LinkedList<>();
+    public List<Vertice> topologico;
 
     public Grafo(int n) {
         vertices = new Vertice[n];
         for (int i = 0; i < n; i++) {
             vertices[i] = new Vertice(i);
         }
+        topologico = new LinkedList<>();
     }
 
     public void addAresta(int u, int v) {

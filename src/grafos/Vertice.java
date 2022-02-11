@@ -16,6 +16,6 @@ public class Vertice {
     }
 
     public String toString() {
-        return "Vertice(" + num + ")";
+        return "Vertice(" + num + ") " + " " + proInicial + " " + proFinal + " " + largura + " " + cor + " " + grauSaida;
     }
 }
