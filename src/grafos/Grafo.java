@@ -4,8 +4,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Grafo {
-    Vertice[] vertices;
-    List<Vertice> topologico = new LinkedList<>();
+    public Vertice[] vertices;
+    public List<Vertice> topologico = new LinkedList<>();
 
     public Grafo(int n) {
         vertices = new Vertice[n];
