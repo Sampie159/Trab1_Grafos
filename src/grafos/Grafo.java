@@ -4,7 +4,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Grafo {
-    Vertice[] vertices;
+    public Vertice[] vertices;
+    public List<Vertice> topologico = new LinkedList<>();
 
     public Grafo(int n) {
         vertices = new Vertice[n];
@@ -67,6 +68,7 @@ public class Grafo {
         v.cor = "preto";
         profundidade++;
         v.proFinal = profundidade;
+        topologico.add(0, v); //Adiciona o vértice v no começo da lista topológica do grafo
         return profundidade;
     }
 }
