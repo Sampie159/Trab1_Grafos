@@ -1,5 +1,5 @@
 # Trabalho 1 de Algoritmos em Grafos
 
-Feito por: \n
-Gabriel Biscaia RA: \n
+Feito por:  
+Gabriel Biscaia RA:  
 Samuel Amboni RA:100970
