@@ -19,16 +19,16 @@ public class Grafo {
         vertices[u].adj.add(vertices[v]);
     }
 
-    public void buscaLargura(Vertice inicial) {
+    public void buscaLargura(int inicial) {
         for (Vertice v : vertices) {
             v.largura = Integer.MAX_VALUE; //"Infinito" em Java pelo que eu entendi
             v.pai = null;
             v.cor = "branco";
         }
-        inicial.cor = "cinza";
-        inicial.largura = 0;
+        vertices[inicial].cor = "cinza";
+        vertices[inicial].largura = 0;
         List<Vertice> prioridade = new LinkedList<>();
-        prioridade.add(inicial);
+        prioridade.add(vertices[inicial]);
         while(!prioridade.isEmpty()) { //Enquanto a lista não for vazia
             Vertice u = prioridade.remove(0);
             for (Vertice v : u.adj) {
@@ -56,7 +56,7 @@ public class Grafo {
         }
     }
 
-    public int buscaProximo(Vertice v, int profundidade) {
+    private int buscaProximo(Vertice v, int profundidade) {
         profundidade++;
         v.cor = "cinza";
         v.proInicial = profundidade;
@@ -71,5 +71,17 @@ public class Grafo {
         v.proFinal = profundidade;
         topologico.add(0, v); //Adiciona o vértice v no começo da lista topológica do grafo
         return profundidade;
+    }
+
+    public void calcularGrausDeSaida() {
+        for (Vertice v : vertices) {
+            v.grauSaida = 0;
+        }
+
+        for (Vertice v : vertices) {
+            for (Vertice u : v.adj) {
+                v.grauSaida++;
+            }
+        }
     }
 }
