@@ -26,7 +26,7 @@ public class Criador {
             for (String s : linhas) {
                 j = 0;
                 for (char c : s.toCharArray()) {
-                    if (c == '1')
+                    if (c != '0')
                         g.addAresta(i, j);
                     j++;
                 }

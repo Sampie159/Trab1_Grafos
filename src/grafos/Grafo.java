@@ -1,5 +1,6 @@
 package grafos;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -19,16 +20,16 @@ public class Grafo {
         vertices[u].adj.add(vertices[v]);
     }
 
-    public void buscaLargura(int inicial) {
+    public void buscaLargura() {
         for (Vertice v : vertices) {
             v.largura = Integer.MAX_VALUE; //"Infinito" em Java pelo que eu entendi
             v.pai = null;
             v.cor = "branco";
         }
-        vertices[inicial].cor = "cinza";
-        vertices[inicial].largura = 0;
+        vertices[0].cor = "cinza";
+        vertices[0].largura = 0;
         List<Vertice> prioridade = new LinkedList<>();
-        prioridade.add(vertices[inicial]);
+        prioridade.add(vertices[0]);
         while(!prioridade.isEmpty()) { //Enquanto a lista não for vazia
             Vertice u = prioridade.remove(0);
             for (Vertice v : u.adj) {
@@ -83,5 +84,16 @@ public class Grafo {
                 v.grauSaida++;
             }
         }
+    }
+
+    public List<Vertice> prim() {
+        List<Vertice> caminho = new ArrayList<>();
+        for (Vertice v : vertices) {
+            v.chave = Integer.MAX_VALUE;
+            v.pai = null;
+        }
+        vertices[0].chave = 0;
+        caminho.add(vertices[0]);
+        return caminho;
     }
 }
