@@ -8,7 +8,7 @@ public class Grafo {
     public Vertice[] vertices;
     public List<Vertice> topologico;
 
-    public Grafo(int n) {
+    public Grafo(int n) { //inicializa os vertices do grafo
         vertices = new Vertice[n];
         for (int i = 0; i < n; i++) {
             vertices[i] = new Vertice(i);
@@ -16,19 +16,19 @@ public class Grafo {
         topologico = new LinkedList<>();
     }
 
-    public void addAresta(int u, int v) {
+    public void addAresta(int u, int v) { //não entendi como funciona
         vertices[u].adj.add(vertices[v]);
     }
 
     public void buscaLargura() {
         for (Vertice v : vertices) {
-            v.largura = Integer.MAX_VALUE; //"Infinito" em Java pelo que eu entendi
+            v.largura = Integer.MAX_VALUE; //todos os vertices são iniciados com o valor "Infinito"
             v.pai = null;
-            v.cor = "branco";
+            v.cor = "branco"; //não percorrido
         }
-        vertices[0].cor = "cinza";
+        vertices[0].cor = "cinza"; //primeiro vertice a ser visitado
         vertices[0].largura = 0;
-        List<Vertice> prioridade = new LinkedList<>();
+        List<Vertice> prioridade = new LinkedList<>(); //não entendi o que é prioridade //SAMUEL ME EXPLICA ISSO
         prioridade.add(vertices[0]);
         while(!prioridade.isEmpty()) { //Enquanto a lista não for vazia
             Vertice u = prioridade.remove(0);
@@ -75,12 +75,12 @@ public class Grafo {
     }
 
     public void calcularGrausDeSaida() {
-        for (Vertice v : vertices) {
+        for (Vertice v : vertices) { //zera o grau de saida de todos os vertices
             v.grauSaida = 0;
         }
 
         for (Vertice v : vertices) {
-            for (Vertice u : v.adj) {
+            for (Vertice u : v.adj) { //calcula grau de saida de todos os vertices
                 v.grauSaida++;
             }
         }
