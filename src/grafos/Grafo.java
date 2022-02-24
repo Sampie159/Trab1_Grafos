@@ -7,6 +7,7 @@ import java.util.List;
 public class Grafo {
     public Vertice[] vertices;
     public List<Vertice> topologico;
+    //public boolean ultimoEncontrado;
 
     public Grafo(int n) { //inicializa os vertices do grafo
         vertices = new Vertice[n];
@@ -87,13 +88,50 @@ public class Grafo {
     }
 
     public List<Vertice> prim() {
-        List<Vertice> caminho = new ArrayList<>();
+        List<Vertice> arvore = new ArrayList<>();
         for (Vertice v : vertices) {
-            v.chave = Integer.MAX_VALUE;
             v.pai = null;
         }
-        vertices[0].chave = 0;
-        caminho.add(vertices[0]);
+        vertices[0].disponivel = true;
+        arvore.add(vertices[0]);
+        arvore = lerFrente(arvore, vertices[0]);
+        return podarArvore(arvore, vertices[vertices.length - 1]);
+    }
+
+    private List<Vertice> lerFrente(List<Vertice> arvore, Vertice vertice) {
+        for (Vertice v : vertice.adj) {
+            if (v.disponivel) {
+                arvore.add(v);
+                v.pai = vertice;
+                v.disponivel = false;
+                arvore = lerFrente(arvore, v);
+            }
+        }
+        return arvore;
+    }
+
+    //Função que encontra o menor caminho da árvore.
+    private List<Vertice> podarArvore(List<Vertice> arvore, Vertice ultimo){
+        List<Vertice> caminho = new ArrayList<>();
+        caminho.add(arvore.get(0));
+        for (Vertice v : arvore) { //Para todo vértice da arvore.
+            for (Vertice u : v.adj) { //Para todo u filho de v.
+                caminho = lerFilho(caminho, u, ultimo);
+            }
+        }
+        return caminho;
+    }
+
+    //Função que le os próximos elementos.
+    private List<Vertice> lerFilho(List<Vertice> caminho, Vertice vertice, Vertice ultimo) {
+        if (vertice.equals(ultimo)) {
+            caminho.add(vertice);
+            ultimo = vertice.pai;
+            return caminho;
+        }
+        for (Vertice v : vertice.adj) {
+            caminho = lerFilho(caminho, v, ultimo);
+        }
         return caminho;
     }
 }
