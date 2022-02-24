@@ -4,15 +4,15 @@ import java.util.LinkedList;
 
 public class Vertice {
     public Vertice pai;
-    public int proInicial, proFinal, largura, num, grauSaida, chave;
+    public int proInicial, proFinal, largura, num, grauSaida;
     public String cor;
     public List<Vertice> adj;
-    public boolean percorrido;
+    public boolean disponivel;
 
     public Vertice(int num) {
         this.num = num;
         this.adj = new LinkedList<>();
-        percorrido = false;
+        disponivel = false;
     }
 
     public String toString() {
