@@ -3,7 +3,7 @@ import java.util.List;
 import java.util.LinkedList;
 
 public class Vertice {
-    public Vertice pai;
+    public Vertice paiL, paiP; //paiL guarda o pai do vértice da busca em largura, paiP da busca em profundidade
     public int proInicial, proFinal, largura, num, grauSaida;
     public String cor;
     public List<Vertice> adj;
@@ -14,7 +14,7 @@ public class Vertice {
     public Vertice(int num) {
         this.num = num;
         this.adj = new LinkedList<>();
-        disponivel = false;
+        disponivel = true;
     }
     /*Vai retorna o indice do vértice, profundidade inicial e final, busca em largura a cor que ficou o vertice e seu grau de saida*/
     public String toString() {

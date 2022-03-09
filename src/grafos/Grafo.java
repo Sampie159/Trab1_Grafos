@@ -7,6 +7,8 @@ import java.util.List;
 public class Grafo {
     public Vertice[] vertices;
     public List<Vertice> topologico;
+    public List<Vertice> menorCaminho; //Uma sequencia de vertices do começo ao fim
+    Vertice ultimo;
     //public boolean ultimoEncontrado;
 
     public Grafo(int n) { //inicializa os vertices do grafo
@@ -15,6 +17,8 @@ public class Grafo {
             vertices[i] = new Vertice(i);
         }
         topologico = new LinkedList<>();
+        ultimo = vertices[n-1];
+        menorCaminho = new LinkedList<>();
     }
 
     public void addAresta(int u, int v) { //não entendi como funciona
@@ -24,7 +28,7 @@ public class Grafo {
     public void buscaLargura() {
         for (Vertice v : vertices) {
             v.largura = Integer.MAX_VALUE; //todos os vertices são iniciados com o valor "Infinito"
-            v.pai = null;
+            v.paiL = null;
             v.cor = "branco"; //não percorrido
         }
         vertices[0].cor = "cinza"; //primeiro vertice a ser visitado
@@ -35,7 +39,7 @@ public class Grafo {
             Vertice u = prioridade.remove(0);
             for (Vertice v : u.adj) {
                 if (v.cor.equals("branco")) {
-                    v.pai = u;
+                    v.paiL = u;
                     v.cor = "cinza";
                     v.largura = u.largura + 1;
                     prioridade.add(v);
@@ -48,7 +52,7 @@ public class Grafo {
     public void buscaProfundidade() {
         for (Vertice v : vertices) {
             v.cor = "branco";
-            v.pai = null;
+            v.paiP = null;
         }
         int profundidade = 0;
         for (Vertice v : vertices) {
@@ -64,7 +68,7 @@ public class Grafo {
         v.proInicial = profundidade;
         for (Vertice u : v.adj) {
             if (u.cor.equals("branco")) {
-                u.pai = v;
+                u.paiP = v;
                 profundidade = buscaProximo(u, profundidade); //Salva o novo valor de profundidade em profundidade
             }
         }
@@ -75,63 +79,12 @@ public class Grafo {
         return profundidade;
     }
 
-    public void calcularGrausDeSaida() {
-        for (Vertice v : vertices) { //zera o grau de saida de todos os vertices
-            v.grauSaida = 0;
-        }
-
-        for (Vertice v : vertices) {
-            for (Vertice u : v.adj) { //calcula grau de saida de todos os vertices
-                v.grauSaida++;
-            }
+    public void encontrarMenorCaminho() {
+        Vertice aux = ultimo;
+        while (aux != null) {
+            menorCaminho.add(0, aux); //Adciona os vértices do fim ao início na lista menorCaminho. Baseado na árvore mínima criada pela busca em largura.
+            aux = aux.paiL;
         }
     }
 
-    public List<Vertice> prim() {
-        List<Vertice> arvore = new ArrayList<>();
-        for (Vertice v : vertices) {
-            v.pai = null;
-        }
-        vertices[0].disponivel = true;
-        arvore.add(vertices[0]);
-        arvore = lerFrente(arvore, vertices[0]);
-        return podarArvore(arvore, vertices[vertices.length - 1]);
-    }
-
-    private List<Vertice> lerFrente(List<Vertice> arvore, Vertice vertice) {
-        for (Vertice v : vertice.adj) {
-            if (v.disponivel) {
-                arvore.add(v);
-                v.pai = vertice;
-                v.disponivel = false;
-                arvore = lerFrente(arvore, v);
-            }
-        }
-        return arvore;
-    }
-
-    //Função que encontra o menor caminho da árvore.
-    private List<Vertice> podarArvore(List<Vertice> arvore, Vertice ultimo){
-        List<Vertice> caminho = new ArrayList<>();
-        caminho.add(arvore.get(0));
-        for (Vertice v : arvore) { //Para todo vértice da arvore.
-            for (Vertice u : v.adj) { //Para todo u filho de v.
-                caminho = lerFilho(caminho, u, ultimo);
-            }
-        }
-        return caminho;
-    }
-
-    //Função que le os próximos elementos.
-    private List<Vertice> lerFilho(List<Vertice> caminho, Vertice vertice, Vertice ultimo) {
-        if (vertice.equals(ultimo)) {
-            caminho.add(vertice);
-            ultimo = vertice.pai;
-            return caminho;
-        }
-        for (Vertice v : vertice.adj) {
-            caminho = lerFilho(caminho, v, ultimo);
-        }
-        return caminho;
-    }
 }
