@@ -8,7 +8,8 @@ public class Grafo {
     public Vertice[] vertices;
     public List<Vertice> topologico;
     public List<Vertice> menorCaminho; //Uma sequencia de vertices do começo ao fim
-    Vertice ultimo;
+    private Vertice ultimo;
+    public boolean cicloEncontrado;
     //public boolean ultimoEncontrado;
 
     public Grafo(int n) { //inicializa os vertices do grafo
@@ -19,6 +20,7 @@ public class Grafo {
         topologico = new LinkedList<>();
         ultimo = vertices[n-1];
         menorCaminho = new LinkedList<>();
+        cicloEncontrado = false;
     }
 
     public void addAresta(int u, int v) { //não entendi como funciona
@@ -87,4 +89,32 @@ public class Grafo {
         }
     }
 
+    public void encontrarCiclo() {
+        for (Vertice v : vertices) {
+            if (!cicloEncontrado) {
+                if (v.disponivel) {
+                    v.disponivel = false;
+                    lerFrente(v);
+                }
+            }
+            else
+                return;
+        }
+    }
+
+    private void lerFrente(Vertice vertice) {
+        for (Vertice v : vertice.adj) {
+            if (!cicloEncontrado) {
+                if (!v.disponivel) { //Se o vértice adjacente não está disponível.
+                    if (v.paiP != null && !v.paiP.equals(vertice)) { //Se o pai de v existe e não for o vértice adjacente, um ciclo foi encontrado.
+                        cicloEncontrado = true;
+                        return; //Para de percorrer o loop pois não tem mais necessidade de continuar.
+                    }
+                } else
+                    v.disponivel = false;
+                    lerFrente(v);
+            } else
+                return; //Para de percorrer o loop pois não tem mais necessidade de continuar.
+        }
+    }
 }

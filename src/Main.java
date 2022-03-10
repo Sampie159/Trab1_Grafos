@@ -13,5 +13,10 @@ public class Main {
         for (Vertice v : g.menorCaminho) {
             System.out.println(v);
         }
+        g.encontrarCiclo();
+        System.out.println(g.cicloEncontrado);
+        for (Vertice v : g.topologico) {
+            System.out.println(v);
+        }
     }
 }
