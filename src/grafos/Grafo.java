@@ -90,10 +90,11 @@ public class Grafo {
     }
 
     public void encontrarCiclo() {
+        for (Vertice v : vertices)
+            v.paiP = null;
         for (Vertice v : vertices) {
             if (!cicloEncontrado) {
                 if (v.disponivel) {
-                    v.disponivel = false;
                     lerFrente(v);
                 }
             }
@@ -103,18 +104,19 @@ public class Grafo {
     }
 
     private void lerFrente(Vertice vertice) {
-        for (Vertice v : vertice.adj) {
-            if (!cicloEncontrado) {
+        vertice.disponivel = false;
+        if (!cicloEncontrado) {
+            for (Vertice v : vertice.adj) {
                 if (!v.disponivel) { //Se o vértice adjacente não está disponível.
-                    if (v.paiP != null && !v.paiP.equals(vertice)) { //Se o pai de v existe e não for o vértice adjacente, um ciclo foi encontrado.
+                    if (vertice.paiP != null && !vertice.paiP.equals(v)) { //Se o pai de v existe e não for o vértice adjacente, um ciclo foi encontrado.
                         cicloEncontrado = true;
                         return; //Para de percorrer o loop pois não tem mais necessidade de continuar.
                     }
-                } else
-                    v.disponivel = false;
+                } else {
+                    v.paiP = vertice;
                     lerFrente(v);
-            } else
-                return; //Para de percorrer o loop pois não tem mais necessidade de continuar.
+                }
+            }
         }
     }
 }
