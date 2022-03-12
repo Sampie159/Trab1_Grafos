@@ -1,4 +1,5 @@
 package grafos;
+
 import java.util.List;
 import java.util.LinkedList;
 
@@ -16,7 +17,7 @@ public class Vertice {
         this.adj = new LinkedList<>();
         disponivel = true;
     }
-    /*Vai retorna o indice do vértice, profundidade inicial e final, busca em largura a cor que ficou o vertice e seu grau de saida*/
+    /*Vai retornar o indice do vértice, profundidade inicial e final, busca em largura a cor que ficou o vertice e seu grau de saida*/
     public String toString() {
         return "Vertice(" + num + ") " + " " + proInicial + " " + proFinal + " " + largura + " " + cor + " " + grauSaida;
     }

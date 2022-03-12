@@ -1,6 +1,5 @@
 package grafos;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -10,7 +9,6 @@ public class Grafo {
     public List<Vertice> menorCaminho; //Uma sequencia de vertices do começo ao fim
     private Vertice ultimo;
     public boolean cicloEncontrado;
-    //public boolean ultimoEncontrado;
 
     public Grafo(int n) { //inicializa os vertices do grafo
         vertices = new Vertice[n];
@@ -35,7 +33,7 @@ public class Grafo {
         }
         vertices[0].cor = "cinza"; //primeiro vertice a ser visitado
         vertices[0].largura = 0;
-        List<Vertice> prioridade = new LinkedList<>(); //não entendi o que é prioridade //SAMUEL ME EXPLICA ISSO
+        List<Vertice> prioridade = new LinkedList<>();
         prioridade.add(vertices[0]);
         while(!prioridade.isEmpty()) { //Enquanto a lista não for vazia
             Vertice u = prioridade.remove(0);
@@ -108,7 +106,7 @@ public class Grafo {
         if (!cicloEncontrado) {
             for (Vertice v : vertice.adj) {
                 if (!v.disponivel) { //Se o vértice adjacente não está disponível.
-                    if (vertice.paiP != null && !vertice.paiP.equals(v)) { //Se o pai de v existe e não for o vértice adjacente, um ciclo foi encontrado.
+                    if (vertice.paiP != null && !vertice.paiP.equals(v)) { //Se o vértice tem pai, e seu pai não for v, um ciclo foi encontrado
                         cicloEncontrado = true;
                         return; //Para de percorrer o loop pois não tem mais necessidade de continuar.
                     }

@@ -1,8 +1,5 @@
 import grafos.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Main {
     public static void main(String[] args) {
         Criador c = new Criador();
