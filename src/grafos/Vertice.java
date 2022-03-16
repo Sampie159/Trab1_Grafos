@@ -19,6 +19,6 @@ public class Vertice {
     }
     /*Vai retornar o indice do vértice, profundidade inicial e final, busca em largura a cor que ficou o vertice e seu grau de saida*/
     public String toString() {
-        return "Vertice(" + num + ") " + " " + proInicial + " " + proFinal + " " + largura + " " + cor + " " + grauSaida;
+        return "Vertice(" + num + ") " + " " + proInicial + " " + proFinal + " " + largura + " " + cor + " " + grauSaida; //grau de saida nao se usa
     }
 }
